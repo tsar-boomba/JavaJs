@@ -271,29 +271,29 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 	}
 
 	@FunctionalInterface
-	public static interface BaseMapFunction<T> {
-		public T map(T t);
+	public static interface BaseMapFunction<E, T> {
+		public T map(E e);
 	}
 	@FunctionalInterface
-	public static interface TwoArgMapFunction<T> extends BaseMapFunction<T> {
-		public T map(T t, int i);
+	public static interface TwoArgMapFunction<E, T> extends BaseMapFunction<E, T> {
+		public T map(E e, int i);
 		@Override
-		default T map(T t) { return t; };
+		default T map(E e) { return (T) new Object(); };
 	}
 	@FunctionalInterface
-	public static interface ThreeArgMapFunction<T> extends TwoArgMapFunction<T> {
-		public T map(T t, int i, JSArray<T> arr);
+	public static interface ThreeArgMapFunction<E, T> extends TwoArgMapFunction<E, T> {
+		public T map(E e, int i, JSArray<E> arr);
 		@Override
-		default T map(T t, int i) { return t; };
+		default T map(E e, int i) { return (T) new Object(); };
 	}
 	/**
     * @throws NullPointerException {@inheritDoc}
     */
-	public JSArray<E> map(BaseMapFunction<E> predicate) {
+	public <T> JSArray<T> map(BaseMapFunction<E, T> predicate) {
 		Objects.requireNonNull(predicate);
-		JSArray<E> mapped = new JSArray<>();
+		JSArray<T> mapped = new JSArray<>();
 		for (int i = 0; i < this.size(); i++) {
-			E result = predicate.map(this.get(i));
+			T result = predicate.map(this.get(i));
 			if (result == null) continue;
 			mapped.push(result);
 		}
@@ -302,11 +302,11 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 	/**
     * @throws NullPointerException {@inheritDoc}
     */
-	public JSArray<E> map(TwoArgMapFunction<E> predicate) {
+	public <T> JSArray<T> map(TwoArgMapFunction<E, T> predicate) {
 		Objects.requireNonNull(predicate);
-		JSArray<E> mapped = new JSArray<>();
+		JSArray<T> mapped = new JSArray<>();
 		for (int i = 0; i < this.size(); i++) {
-			E result = predicate.map(this.get(i), i);
+			T result = predicate.map(this.get(i), i);
 			if (result == null) continue;
 			mapped.push(result);
 		}
@@ -315,11 +315,11 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 	/**
     * @throws NullPointerException {@inheritDoc}
     */
-	public JSArray<E> map(ThreeArgMapFunction<E> predicate) {
+	public <T> JSArray<T> map(ThreeArgMapFunction<E, T> predicate) {
 		Objects.requireNonNull(predicate);
-		JSArray<E> mapped = new JSArray<>();
+		JSArray<T> mapped = new JSArray<>();
 		for (int i = 0; i < this.size(); i++) {
-			E result = predicate.map(this.get(i), i, this);
+			T result = predicate.map(this.get(i), i, this);
 			if (result == null) continue;
 			mapped.push(result);
 		}
