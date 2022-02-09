@@ -271,17 +271,19 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 	}
 
 	@FunctionalInterface
-	public static interface BaseMapFunction<E, T> {
+	public static interface BaseMapFunction<E, T extends Object> {
 		public T map(E e);
 	}
+	@SuppressWarnings("unchecked")
 	@FunctionalInterface
-	public static interface TwoArgMapFunction<E, T> extends BaseMapFunction<E, T> {
+	public static interface TwoArgMapFunction<E, T extends Object> extends BaseMapFunction<E, T> {
 		public T map(E e, int i);
 		@Override
 		default T map(E e) { return (T) new Object(); };
 	}
+	@SuppressWarnings("unchecked")
 	@FunctionalInterface
-	public static interface ThreeArgMapFunction<E, T> extends TwoArgMapFunction<E, T> {
+	public static interface ThreeArgMapFunction<E, T extends Object> extends TwoArgMapFunction<E, T> {
 		public T map(E e, int i, JSArray<E> arr);
 		@Override
 		default T map(E e, int i) { return (T) new Object(); };
@@ -327,20 +329,20 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 	}
 
 	@FunctionalInterface
-	public static interface BaseFilterFunction<T> {
-		public boolean filter(T t);
+	public static interface BaseFilterFunction<E> {
+		public boolean filter(E t);
 	}
 	@FunctionalInterface
-	public static interface TwoArgFilterFunction<T> extends BaseFilterFunction<T> {
-		public boolean filter(T t, int i);
+	public static interface TwoArgFilterFunction<E> extends BaseFilterFunction<E> {
+		public boolean filter(E t, int i);
 		@Override
-		default boolean filter(T t) { return true; };
+		default boolean filter(E t) { return true; };
 	}
 	@FunctionalInterface
-	public static interface ThreeArgFilterFunction<T> extends TwoArgFilterFunction<T> {
-		public boolean filter(T t, int i, JSArray<T> arr);
+	public static interface ThreeArgFilterFunction<E> extends TwoArgFilterFunction<E> {
+		public boolean filter(E t, int i, JSArray<E> arr);
 		@Override
-		default boolean filter(T t, int i) { return true; };
+		default boolean filter(E t, int i) { return true; };
 	}
 	/**
     * @throws NullPointerException {@inheritDoc}
@@ -374,18 +376,18 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 	}
 
 	@FunctionalInterface
-	public static interface BaseForEachFunction<T> extends Consumer<T> {
-		public void accept(T t);
+	public static interface BaseForEachFunction<E> extends Consumer<E> {
+		public void accept(E t);
 	}
-	public static interface TwoArgForEachFunction<T> extends BaseForEachFunction<T> {
-		public void accept(T t, int i);
+	public static interface TwoArgForEachFunction<E> extends BaseForEachFunction<E> {
+		public void accept(E t, int i);
 		@Override
-		default void accept(T t) {}
+		default void accept(E t) {}
 	}
-	public static interface ThreeArgForEachFunction<T> extends TwoArgForEachFunction<T> {
-		public void accept(T t, int i, JSArray<T> arr);
+	public static interface ThreeArgForEachFunction<E> extends TwoArgForEachFunction<E> {
+		public void accept(E t, int i, JSArray<E> arr);
 		@Override
-		default void accept(T t, int i) {}
+		default void accept(E t, int i) {}
 	}
 	/**
     * @throws NullPointerException {@inheritDoc}
