@@ -30,5 +30,6 @@ public class App {
         System.out.println("concated: " + test.concat(remove) + " size: " + test.concat(remove).size());
         System.out.println("joined: " + test.join());
         System.out.println("every: " + test.every((var item) -> item > 0));
+        System.out.println("some: " + test.some((var item) -> item > 10));
     }
 }

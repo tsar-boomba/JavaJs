@@ -453,6 +453,48 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 		return true;
 	}
 
+	@FunctionalInterface
+	public static interface BaseSomeFunction<E> {
+		public boolean accept(E t);
+	}
+	public static interface TwoArgSomeFunction<E> extends BaseSomeFunction<E> {
+		public boolean accept(E t, int i);
+		@Override
+		default boolean accept(E t) { return true; }
+	}
+	public static interface ThreeArgSomeFunction<E> extends TwoArgSomeFunction<E> {
+		public boolean accept(E t, int i, JSArray<E> arr);
+		@Override
+		default boolean accept(E t, int i) { return true; }
+	}
+	/**
+    * @throws NullPointerException {@inheritDoc}
+    */
+	public boolean some(BaseSomeFunction<E> predicate) {
+		for (int i = 0; i < size; i++) {
+			if (predicate.accept(get(i))) return true;
+		}
+		return false;
+	}
+	/**
+    * @throws NullPointerException {@inheritDoc}
+    */
+	public boolean some(TwoArgSomeFunction<E> predicate) {
+		for (int i = 0; i < size; i++) {
+			if (predicate.accept(get(i), i)) return true;
+		}
+		return false;
+	}
+	/**
+    * @throws NullPointerException {@inheritDoc}
+    */
+	public boolean some(ThreeArgSomeFunction<E> predicate) {
+		for (int i = 0; i < size; i++) {
+			if (predicate.accept(get(i), i, this)) return true;
+		}
+		return false;
+	}
+
 	/**
      * Returns a shallow copy of this {@code JSArray} instance.  (The
      * elements themselves are not copied.)
