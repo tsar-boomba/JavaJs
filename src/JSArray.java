@@ -316,6 +316,13 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 		return result;
 	}
 
+	public JSArray<E> reverse() {
+		JSArray<E> newArr = new JSArray<>();
+		if (size == 0) return newArr;
+		for (int i = size - 1; i >= 0; i--) newArr.push(get(i));
+		return newArr;
+	}
+
 	@FunctionalInterface
 	public static interface BaseMapFunction<E, T extends Object> {
 		public T map(E e);

@@ -31,5 +31,6 @@ public class App {
         System.out.println("joined: " + test.join());
         System.out.println("every: " + test.every((var item) -> item > 0));
         System.out.println("some: " + test.some((var item) -> item > 10));
+        System.out.println("reverse: " + test.reverse());
     }
 }
