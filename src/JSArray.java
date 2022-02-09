@@ -411,6 +411,48 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 		for (int i = 0; i < size; i++) predicate.accept(this.get(i), i, this);
 	}
 
+	@FunctionalInterface
+	public static interface BaseEveryFunction<E> {
+		public boolean accept(E t);
+	}
+	public static interface TwoArgEveryFunction<E> extends BaseEveryFunction<E> {
+		public boolean accept(E t, int i);
+		@Override
+		default boolean accept(E t) { return true; }
+	}
+	public static interface ThreeArgEveryFunction<E> extends TwoArgEveryFunction<E> {
+		public boolean accept(E t, int i, JSArray<E> arr);
+		@Override
+		default boolean accept(E t, int i) { return true; }
+	}
+	/**
+    * @throws NullPointerException {@inheritDoc}
+    */
+	public boolean every(BaseEveryFunction<E> predicate) {
+		for (int i = 0; i < size; i++) {
+			if (!predicate.accept(get(i))) return false;
+		}
+		return true;
+	}
+	/**
+    * @throws NullPointerException {@inheritDoc}
+    */
+	public boolean every(TwoArgEveryFunction<E> predicate) {
+		for (int i = 0; i < size; i++) {
+			if (!predicate.accept(get(i), i)) return false;
+		}
+		return true;
+	}
+	/**
+    * @throws NullPointerException {@inheritDoc}
+    */
+	public boolean every(ThreeArgEveryFunction<E> predicate) {
+		for (int i = 0; i < size; i++) {
+			if (!predicate.accept(get(i), i, this)) return false;
+		}
+		return true;
+	}
+
 	/**
      * Returns a shallow copy of this {@code JSArray} instance.  (The
      * elements themselves are not copied.)

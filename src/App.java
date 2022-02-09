@@ -29,5 +29,6 @@ public class App {
         System.out.println("sliceed: " + test.slice(4, 8));
         System.out.println("concated: " + test.concat(remove) + " size: " + test.concat(remove).size());
         System.out.println("joined: " + test.join());
+        System.out.println("every: " + test.every((var item) -> item > 0));
     }
 }
