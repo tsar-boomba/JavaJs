@@ -221,6 +221,52 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 		}
 	}
 
+	/**
+	 * 
+	 * @param target object you would like to find in the array
+	 * @return {@code target} or null if target is not found in the array
+	 */
+	public E find(Object target) {
+		if (target == null) {
+			for (int i  = 0; i < elementData.length; i++) {
+				if (elementData[i] == null) {
+					return get(i);
+				}
+			}
+			return null;
+		} else {
+			for (int i  = 0; i < elementData.length; i++) {
+				if (target.equals(elementData[i])) {
+					return get(i);
+				}
+			}
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param target object you would like to find in the array
+	 * @return {@code target} or null if target is not found in the array
+	 */
+	public E findReverse(Object target) {
+		if (target == null) {
+			for (int i = elementData.length - 1; i >= 0; i--) {
+				if (elementData[i] == null) {
+					return get(i);
+				}
+			}
+			return null;
+		} else {
+			for (int i = elementData.length - 1; i >= 0; i--) {
+				if (target.equals(elementData[i])) {
+					return get(i);
+				}
+			}
+			return null;
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	public JSArray<E> slice(int from, int to) {
 		return new JSArray<E>((E[]) Arrays.copyOfRange(elementData, from, to));
