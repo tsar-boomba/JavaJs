@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v2 # v2 minimum required
       - uses: axel-op/googlejavaformat-action@v3.6.0
         with:
-          args: "--replace --a"
+          args: "--replace -a"
           # Recommended if you use MacOS:
           # githubToken: ${{ secrets.GITHUB_TOKEN }}
