@@ -585,7 +585,7 @@ public class JSArray<E extends Object> extends AbstractList<E> implements Random
 		try {
 			for (int i = 0; i < size; i++) {
 				if (o.get(i).equals(this.get(i))) continue;
-				return false;
+return false;
 			}
 			return true;
 		} catch (Exception e) {
