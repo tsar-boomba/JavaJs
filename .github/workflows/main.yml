@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # v2 minimum required
-      - uses: tsar-boomba/prettier-java-action
+      - uses: tsar-boomba/prettier-java-action@0.1.0-beta
